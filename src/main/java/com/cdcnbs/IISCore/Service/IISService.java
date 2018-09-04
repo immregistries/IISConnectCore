@@ -90,5 +90,11 @@ public class IISService {
 		
 		
 	}
-	
+	// Overloaded method that allows passing the configuration string as an argument.
+	public static IISData queryIIS(Person person, String config) throws Exception {
+		
+		person.setIISConfig(config);
+		return queryIIS(person);
+		
+	}
 }
