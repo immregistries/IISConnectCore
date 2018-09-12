@@ -24,9 +24,6 @@ public class IISService {
 		QueryResponse queryResponse = new QueryResponse();
 	    if (person != null) {
 	    	
-	    	// Include the patient in the return object
-	    	ret.setPatient(person);
-	    	
 	    	// Map patient record to query request object;
 			QueryRequest queryRequest = Messaging.getQueryRequestFromPatient(person);
 			
@@ -50,6 +47,12 @@ public class IISService {
 				
 				// Create connector from Web Service configuration information stored in person object.
 				Connector connector = Connector.makeConnectors(person.getIISConfig()).get(0);
+				
+				// Remove the connection information so that it does not get sent to client.
+				person.setIISConfig("");
+				
+				// Include the patient in the return object
+		    	ret.setPatient(person);
 				
 				// custom transformations required by state IIS obtained from the connector.
 				String transforms = connector.getCustomTransformations();
